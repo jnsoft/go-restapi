@@ -44,7 +44,7 @@ curl http://localhost:8080/items \
     --include \
     --header "Content-Type: application/json" \
     --request "POST" \
-    --data '{"name": "item1"}'
+    --data '{"name": "new item"}'
 
 curl http://localhost:8080/items/40b01ad4-bba4-4e18-8ac5-3fe201e9144c
 

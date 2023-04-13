@@ -26,6 +26,7 @@ func NewServer() *Server {
 
 func (s *Server) routes() {
 	s.HandleFunc("/items", s.listItems()).Methods("GET")
+	s.HandleFunc("/items/", s.listItems()).Methods("GET")
 	s.HandleFunc("/items/{id}", s.getItem()).Methods("GET")
 	s.HandleFunc("/items", s.createItem()).Methods("POST")
 	s.HandleFunc("/items/{id}", s.removeItem()).Methods("DELETE")
@@ -54,6 +55,7 @@ func (s *Server) getItem() http.HandlerFunc {
 		id, err := uuid.Parse(id_str)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 
 		for _, item := range s.items {
@@ -63,10 +65,10 @@ func (s *Server) getItem() http.HandlerFunc {
 					http.Error(w, err.Error(), http.StatusInternalServerError)
 					return
 				}
-				break
+				return
 			}
 		}
-		http.Error(w, err.Error(), http.StatusNotFound)
+		http.NotFound(w, r)
 	}
 }
 
@@ -94,13 +96,16 @@ func (s *Server) removeItem() http.HandlerFunc {
 		id, err := uuid.Parse(id_str)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
 		}
 
 		for i, item := range s.items {
 			if item.Id == id {
 				s.items = append(s.items[:i], s.items[i+1:]...)
-				break
+				return
 			}
 		}
+
+		http.NotFound(w, r)
 	}
 }
