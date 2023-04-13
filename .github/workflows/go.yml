@@ -28,5 +28,8 @@ jobs:
     - name: Build Mux Service
       run: go build -o ./bin/ ./mux-webservice/.
 
-    - name: Test
-      run: go test -v ./...
+    - name: Test Gin Service
+      run: go test -v ./gin-webservice/.
+      
+    - name: Test Mux Service
+      run: go test -v ./mux-webservice/.
