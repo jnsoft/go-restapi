@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -19,6 +20,7 @@ func NewServer() *Server {
 		items:  []Item{},
 	}
 	s.routes()
+	s.initDb(25)
 	return s
 }
 
@@ -27,6 +29,13 @@ func (s *Server) routes() {
 	s.HandleFunc("/items/{id}", s.getItem()).Methods("GET")
 	s.HandleFunc("/items", s.createItem()).Methods("POST")
 	s.HandleFunc("/items/{id}", s.removeItem()).Methods("DELETE")
+}
+
+func (s *Server) initDb(n int) {
+
+	for i := 0; i < n; i++ {
+		s.items = append(s.items, Item{Id: uuid.New(), Name: fmt.Sprintf("Item %v", i+1)})
+	}
 }
 
 func (s *Server) listItems() http.HandlerFunc {
@@ -50,18 +59,14 @@ func (s *Server) getItem() http.HandlerFunc {
 		for _, item := range s.items {
 			if item.Id == id {
 				w.Header().Set("Content-Type", "application/json")
-				if err := json.NewEncoder(w).Encode(s.items); err != nil {
+				if err := json.NewEncoder(w).Encode(item); err != nil {
 					http.Error(w, err.Error(), http.StatusInternalServerError)
 					return
 				}
+				break
 			}
 		}
-
-		w.Header().Set("Content-Type", "application/json")
-		if err := json.NewEncoder(w).Encode(s.items); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+		http.Error(w, err.Error(), http.StatusNotFound)
 	}
 }
 

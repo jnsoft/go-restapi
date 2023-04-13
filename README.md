@@ -36,19 +36,19 @@ cd mux-webservice
 go mod init go-restapi/mux-webservice
 ```
 
-### Test Gin Web Service
+### Test Mux Web Service
 ```
-curl http://localhost:8080/albums
+curl http://localhost:8080/items
 
-curl http://localhost:8080/albums/2
-
-curl http://localhost:8080/albums \
+curl http://localhost:8080/items \
     --include \
     --header "Content-Type: application/json" \
     --request "POST" \
-    --data '{"id": "4","title": "The Modern Sound of Betty Carter","artist": "Betty Carter","price": 49.99}'
+    --data '{"name": "item1"}'
 
-curl http://localhost:8080/albums \
-    --header "Content-Type: application/json" \
-    --request "GET"
+curl http://localhost:8080/items/40b01ad4-bba4-4e18-8ac5-3fe201e9144c
+
+curl http://localhost:8080/items/40b01ad4-bba4-4e18-8ac5-3fe201e9144c \
+    --request "DELETE"
+
 ```
