@@ -9,6 +9,9 @@ go build -o ./bin/ ./mux-webservice/.
 openssl req  -new  -newkey rsa:2048  -nodes  -keyout localhost.key  -out localhost.csr
 openssl  x509  -req  -days 365  -in localhost.csr  -signkey localhost.key  -out localhost.crt
 (the common name of the certificate should be localhost for local testing)
+
+sudo cp localhost.crt /usr/local/share/ca-certificates/
+sudo update-ca-certificates
 ```
 
 ## Gin Example
