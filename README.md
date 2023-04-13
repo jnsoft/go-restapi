@@ -1,6 +1,7 @@
 # go-restapi
 
-
+go build -o ./bin/ ./gin-webservice/.
+go build -o ./bin/ ./mux-webservice/.
 
 ## Gin Example
 
