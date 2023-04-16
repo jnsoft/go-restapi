@@ -1,10 +1,18 @@
 # go-restapi
 
-## Build
+## Init
 ```
+sudo apt-get update
+sudo apt-get install -y postgresql-client
 docker-compose .devcontainer/ build
 docker-compose .devcontainer/ up
 
+psql -h localhost -p 5432 -U postgres -W  
+
+
+```
+## Build
+```
 go build -o ./bin/ ./gin-webservice/.
 go build -o ./bin/ ./mux-webservice/.
 

@@ -1,11 +1,27 @@
+//* MySQL
+DROP TABLE IF EXISTS album;
+CREATE TABLE album (
+  id         INT AUTO_INCREMENT NOT NULL,
+  title      VARCHAR(128) NOT NULL,
+  artist     VARCHAR(255) NOT NULL,
+  price      DECIMAL(5,2) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+--*/
+
+--//* Postgres
 CREATE TABLE IF NOT EXISTS products (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL UNIQUE,
-  price INTEGER NOT NULL,
-  description TEXT
+  title VARCHAR(128) NOT NULL UNIQUE,
+  artist VARCHAR(255) NOT NULL,
+  price DECIMAL(5,2) NOT NULL
 );
+--*/
 
-INSERT INTO products (name, price, description) VALUES
-('Product 1', 10, 'Description 1'),
-('Product 2', 20, 'Description 2'),
-('Product 3', 30, 'Description 3');
+INSERT INTO album
+  (title, artist, price)
+VALUES
+  ('Blue Train', 'John Coltrane', 56.99),
+  ('Giant Steps', 'John Coltrane', 63.99),
+  ('Jeru', 'Gerry Mulligan', 17.99),
+  ('Sarah Vaughan', 'Sarah Vaughan', 34.98);
