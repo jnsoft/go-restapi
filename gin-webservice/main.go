@@ -63,6 +63,7 @@ func getAlbumByID(c *gin.Context) {
 	err = conn.QueryRow(context.Background(), "select * from albums where id=$1", id).Scan(&album.Id, &album.Artist, &album.Title, &album.Price)
 	if err != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+		return
 	}
 	c.IndentedJSON(http.StatusOK, album)
 }
@@ -75,8 +76,19 @@ func postAlbums(c *gin.Context) {
 		return
 	}
 
-	// Add the new album to the slice.
-	albums_static = append(albums_static, newAlbum)
+	conn, err := pgx.Connect(context.Background(), postgres_url)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+	defer conn.Close(context.Background())
+
+	err = conn.QueryRow(context.Background(), "INSERT INTO albums (title, artist, price) VALUES ($1, $2, $3) RETURNING Id", newAlbum.Title, newAlbum.Artist, newAlbum.Price).Scan(&newAlbum.Id)
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": "error saving album"})
+		return
+	}
+
 	c.IndentedJSON(http.StatusCreated, newAlbum)
 }
 
@@ -97,4 +109,17 @@ func getAlbumById_static(c *gin.Context) {
 		}
 	}
 	c.IndentedJSON(http.StatusNotFound, gin.H{"message": "album not found"})
+}
+
+func postAlbum_static(c *gin.Context) {
+	var newAlbum Album
+
+	// Call BindJSON to bind the received JSON to newAlbum.
+	if err := c.BindJSON(&newAlbum); err != nil {
+		return
+	}
+
+	// Add the new album to the slice.
+	albums_static = append(albums_static, newAlbum)
+	c.IndentedJSON(http.StatusCreated, newAlbum)
 }
