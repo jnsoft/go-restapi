@@ -20,12 +20,12 @@ type Route struct {
 
 type Routes []Route
 
-func AllRoutes() Routes {
+func AllRoutes(e handlers.Env) Routes {
 	routes := Routes{
 		Route{"Index", "GET", "/", handlers.Index},
-		Route{"BookIndex", "GET", "/items", handlers.Items},
-		//Route{"Bookshow", "GET", "/books/:isdn", BookShow},
-		//Route{"Bookshow", "POST", "/books", BookCreate},
+		Route{"ItemIndex", "GET", "/items", e.ListItems},
+		Route{"ItemDetails", "GET", "/items/:id", e.GetItem},
+		Route{"ItemDetails", "POST", "/items", e.CreateItem},
 	}
 	return routes
 }

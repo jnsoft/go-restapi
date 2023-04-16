@@ -9,26 +9,44 @@ import (
 	"go-restapi/api-service/models"
 	"go-restapi/api-service/store"
 
+	"github.com/google/uuid"
 	"github.com/julienschmidt/httprouter"
 )
 
-// Handler for the books index action
-// GET /books
-func Items(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	items := []*models.Item{}
-	for _, item := range store.Item_store {
-		items = append(items, item)
-	}
-	writeOKResponse(w, items)
+type Env struct {
+	Db *store.ItemStore
 }
 
-/*
+// GET /items
+func (e *Env) ListItems(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	items := []*models.Item{}
+	for _, item := range *e.Db {
+		items = append(items, item)
+	}
+	JsonResponse(w, items)
+}
 
-// Handler for the books Create action
-// POST /books
-func BookCreate(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	book := &Item{}
-	if err := populateModelFromHandler(w, r, params, book); err != nil {
+// GET /items/:id
+func (e *Env) GetItem(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	id_str := params.ByName("id")
+	id, err := uuid.Parse(id_str)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	item, ok := e.Db.Find(id)
+	if !ok {
+		writeErrorResponse(w, http.StatusNotFound, "Item Not Found")
+		return
+	}
+	JsonResponse(w, item)
+}
+
+// POST /items
+func (e *Env) CreateItem(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	item := &models.Item{}
+	if err := populateModelFromHandler(w, r, params, item); err != nil {
 		writeErrorResponse(w, http.StatusUnprocessableEntity, "Unprocessible Entity")
 		return
 	}
@@ -36,29 +54,17 @@ func BookCreate(w http.ResponseWriter, r *http.Request, params httprouter.Params
 	writeOKResponse(w, book)
 }
 
-
-
-// Handler for the books Show action
-// GET /books/:isdn
-func BookShow(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-	isdn := params.ByName("isdn")
-	book, ok := bookstore[isdn]
-	if !ok {
-		// No book with the isdn in the url has been found
-		writeErrorResponse(w, http.StatusNotFound, "Record Not Found")
+// Writes the response as a standard JSON response with StatusOK
+func JsonResponse(w http.ResponseWriter, m interface{}) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	if err := json.NewEncoder(w).Encode(m); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	writeOKResponse(w, book)
 }
 
-
-
-
-
-*/
-
 // Writes the response as a standard JSON response with StatusOK
-func writeOKResponse(w http.ResponseWriter, m interface{}) {
+func writeOKResponse_meta(w http.ResponseWriter, m interface{}) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(&models.JsonResponse{Data: m}); err != nil {
