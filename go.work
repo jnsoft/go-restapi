@@ -1,6 +1,7 @@
 go 1.20
 
 use (
+	./api-service
 	./gin-webservice
 	./mux-webservice
 )

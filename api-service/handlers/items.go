@@ -1,4 +1,4 @@
-package main
+package handlers
 
 import (
 	"encoding/json"
@@ -7,12 +7,26 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"go-restapi/api-service/models"
+	"go-restapi/api-service/store"
+
 	"github.com/julienschmidt/httprouter"
+	
 )
 
-func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	fmt.Fprint(w, "Welcome!\n")
+// Handler for the books index action
+// GET /books
+func Items(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	items := []*Item{}
+	for _, item := range item_store {
+		items = append(items, item)
+	}
+	writeOKResponse(w, items)
 }
+
+
+
+/*
 
 // Handler for the books Create action
 // POST /books
@@ -26,15 +40,7 @@ func BookCreate(w http.ResponseWriter, r *http.Request, params httprouter.Params
 	writeOKResponse(w, book)
 }
 
-// Handler for the books index action
-// GET /books
-func BookIndex(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	books := []*Book{}
-	for _, book := range bookstore {
-		books = append(books, book)
-	}
-	writeOKResponse(w, books)
-}
+
 
 // Handler for the books Show action
 // GET /books/:isdn
@@ -48,6 +54,12 @@ func BookShow(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 	}
 	writeOKResponse(w, book)
 }
+
+
+
+
+
+*/
 
 // Writes the response as a standard JSON response with StatusOK
 func writeOKResponse(w http.ResponseWriter, m interface{}) {

@@ -1,4 +1,4 @@
-package database
+package store
 
 // A map to store the items with the uuid as the key
 // This acts as the storage in lieu of an actual database

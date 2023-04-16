@@ -108,6 +108,10 @@ mssql-cli -S localhost -U sa -P 123abcAbc
 mkdir gin-webservice
 cd gin-webservice
 go mod init go-restapi/gin-webservice
+
+cd ..
+go work use ./gin-webservice
+go work use ./api-service
 ```
 
 ```
