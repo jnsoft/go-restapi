@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -11,20 +10,17 @@ import (
 	"go-restapi/api-service/store"
 
 	"github.com/julienschmidt/httprouter"
-	
 )
 
 // Handler for the books index action
 // GET /books
 func Items(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	items := []*Item{}
-	for _, item := range item_store {
+	items := []*models.Item{}
+	for _, item := range store.Item_store {
 		items = append(items, item)
 	}
 	writeOKResponse(w, items)
 }
-
-
 
 /*
 
@@ -65,7 +61,7 @@ func BookShow(w http.ResponseWriter, r *http.Request, params httprouter.Params) 
 func writeOKResponse(w http.ResponseWriter, m interface{}) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(&JsonResponse{Data: m}); err != nil {
+	if err := json.NewEncoder(w).Encode(&models.JsonResponse{Data: m}); err != nil {
 		writeErrorResponse(w, http.StatusInternalServerError, "Internal Server Error")
 	}
 }
@@ -76,7 +72,7 @@ func writeErrorResponse(w http.ResponseWriter, errorCode int, errorMsg string) {
 	w.WriteHeader(errorCode)
 	json.
 		NewEncoder(w).
-		Encode(&JsonErrorResponse{Error: &ApiError{Status: errorCode, Title: errorMsg}})
+		Encode(&models.JsonErrorResponse{Error: &models.ApiError{Status: errorCode, Title: errorMsg}})
 }
 
 // Populates a model from the params in the Handler
