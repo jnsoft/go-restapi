@@ -18,6 +18,10 @@ sudo apt-get install mssql-cli
 sudo apt-get install -f
 
 docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=123abcAbc" -e "MSSQL_PID=Express" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+
+pip install mssql-cli
+pip install cli-helpers --upgrade --force
+mssql-cli -S localhost -U sa -P 123abcAbc
 ```
 
 ## Init
