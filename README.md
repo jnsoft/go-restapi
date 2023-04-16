@@ -8,6 +8,8 @@ docker-compose .devcontainer/ build
 docker-compose .devcontainer/ up
 
 psql -h localhost -p 5432 -U postgres -W  
+postgres>\l
+postgres>select * from albums \x\g\x
 
 
 ```
