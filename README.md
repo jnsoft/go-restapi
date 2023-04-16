@@ -1,11 +1,33 @@
 # go-restapi
 
+## MS SQL
+```
+# Import the public repository GPG keys
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+
+# Register the Microsoft Ubuntu repository
+sudo apt-add-repository https://packages.microsoft.com/ubuntu/20.04/prod
+
+# Update the list of products
+sudo apt-get update
+
+# Install mssql-cli
+sudo apt-get install mssql-cli
+
+# Install missing dependencies
+sudo apt-get install -f
+
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=123abcAbc" -e "MSSQL_PID=Express" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+```
+
 ## Init
 ```
 sudo apt-get update
 sudo apt-get install -y postgresql-client
 docker-compose .devcontainer/ build (docker-compose -f .devcontainer/docker-compose.yml build)
 docker-compose .devcontainer/ up (docker-compose -f .devcontainer/docker-compose.yml up)
+
+
 
 psql -h localhost -p 5432 -d albums -U postgres -W  
 postgres>select * from albums \x\g\x
@@ -83,4 +105,8 @@ go mod init go-restapi/gin-webservice
 mkdir mux-webservice
 cd mux-webservice
 go mod init go-restapi/mux-webservice
+
+ cat /etc/os-release
+ 	
+pip install mssql-cli
 ```
