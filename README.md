@@ -4,14 +4,16 @@
 ```
 sudo apt-get update
 sudo apt-get install -y postgresql-client
-docker-compose .devcontainer/ build
-docker-compose .devcontainer/ up
+docker-compose .devcontainer/ build (docker-compose -f .devcontainer/docker-compose.yml build)
+docker-compose .devcontainer/ up (docker-compose -f .devcontainer/docker-compose.yml up)
 
-psql -h localhost -p 5432 -U postgres -W  
-postgres>\l
+psql -h localhost -p 5432 -d albums -U postgres -W  
 postgres>select * from albums \x\g\x
 
-
+postgres>\l (list databases)
+postgres>\c db_name (change databse)
+postgres>\dt (list tables)
+postgres>\dt+ (list tables)
 ```
 ## Build
 ```
