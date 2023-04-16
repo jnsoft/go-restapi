@@ -34,7 +34,7 @@ docker-compose .devcontainer/ up (docker-compose -f .devcontainer/docker-compose
 
 
 psql -h localhost -p 5432 -d albums -U postgres -W  
-postgres>select * from albums \x\g\x
+postgres>select * from albums \g\x
 
 postgres>\l (list databases)
 postgres>\c db_name (change databse)
