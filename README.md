@@ -14,9 +14,25 @@ docker-compose .devcontainer/ up (docker-compose -f .devcontainer/docker-compose
 ```
 go build -o ./bin/ ./gin-webservice/.
 go build -o ./bin/ ./mux-webservice/.
+go build -o ./bin/ ./api-service/.
 
 ./bin/gin-webservice&
 ./bin/mux-webservice&
+./bin/api-service&
+```
+
+### Test HttpRouter Web Service
+```
+curl http://localhost:8082/items
+
+curl http://localhost:8082/items/uuid...
+
+curl http://localhost:8082/items \
+    --include \
+    --header "Content-Type: application/json" \
+    --request "POST" \
+    --data '{"name": "This is new"}'
+
 ```
 
 ### Test Gin Web Service
