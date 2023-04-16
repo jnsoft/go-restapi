@@ -34,7 +34,6 @@ func (e *Env) GetItem(w http.ResponseWriter, r *http.Request, params httprouter.
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-
 	item, ok := e.Db.Find(id)
 	if !ok {
 		writeErrorResponse(w, http.StatusNotFound, "Item Not Found")
@@ -50,8 +49,9 @@ func (e *Env) CreateItem(w http.ResponseWriter, r *http.Request, params httprout
 		writeErrorResponse(w, http.StatusUnprocessableEntity, "Unprocessible Entity")
 		return
 	}
-	item_store[book.ISDN] = book
-	writeOKResponse(w, book)
+	id := e.Db.Insert(item.Name)
+	item.Id = id
+	JsonResponse(w, item)
 }
 
 // Writes the response as a standard JSON response with StatusOK

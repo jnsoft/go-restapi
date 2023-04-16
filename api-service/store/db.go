@@ -21,6 +21,12 @@ func (s ItemStore) Init(n int) {
 	}
 }
 
+func (s ItemStore) Insert(name string) uuid.UUID {
+	item := models.Item{Id: uuid.New(), Name: name}
+	s[item.Id] = &item
+	return item.Id
+}
+
 func (s ItemStore) Find(id uuid.UUID) (*models.Item, bool) {
 	item, ok := s[id]
 	if !ok {
