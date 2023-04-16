@@ -57,7 +57,7 @@ sudo update-ca-certificates
 
 ./bin/mux-webservice&
 
-curl http://localhost:9001/items
+curl https://localhost:9001/items
 ```
 
 ### Ref
