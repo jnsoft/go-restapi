@@ -1,46 +1,15 @@
 # go-restapi
 
-## MS SQL
-```
-# Import the public repository GPG keys
-curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-
-# Register the Microsoft Ubuntu repository
-sudo apt-add-repository https://packages.microsoft.com/ubuntu/20.04/prod
-
-# Update the list of products
-sudo apt-get update
-
-# Install mssql-cli
-sudo apt-get install mssql-cli
-
-# Install missing dependencies
-sudo apt-get install -f
-
-docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=123abcAbc" -e "MSSQL_PID=Express" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
-
-pip install mssql-cli
-pip install cli-helpers --upgrade --force
-mssql-cli -S localhost -U sa -P 123abcAbc
-```
+Demo examples of two webbservers. Gin using external db:s and Mux 
 
 ## Init
+Set up unvironment with postgres and mssql
+
 ```
-sudo apt-get update
-sudo apt-get install -y postgresql-client
 docker-compose .devcontainer/ build (docker-compose -f .devcontainer/docker-compose.yml build)
 docker-compose .devcontainer/ up (docker-compose -f .devcontainer/docker-compose.yml up)
-
-
-
-psql -h localhost -p 5432 -d albums -U postgres -W  
-postgres>select * from albums \g\x
-
-postgres>\l (list databases)
-postgres>\c db_name (change databse)
-postgres>\dt (list tables)
-postgres>\dt+ (list tables)
 ```
+
 ## Build
 ```
 go build -o ./bin/ ./gin-webservice/.
@@ -97,6 +66,42 @@ sudo update-ca-certificates
 
 curl https://localhost:9001/items
 ```
+
+## Postgres CLI
+```
+sudo apt-get update
+sudo apt-get install -y postgresql-client
+
+postgres>\l (list databases)
+postgres>\c db_name (change databse)
+postgres>\dt (list tables)
+postgres>\dt+ (list tables)
+```
+
+## MS SQL CLI
+```
+# Import the public repository GPG keys
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+
+# Register the Microsoft Ubuntu repository
+sudo apt-add-repository https://packages.microsoft.com/ubuntu/20.04/prod
+
+# Update the list of products
+sudo apt-get update
+
+# Install mssql-cli
+sudo apt-get install mssql-cli
+
+# Install missing dependencies
+sudo apt-get install -f
+
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=123abcAbc" -e "MSSQL_PID=Express" -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+
+pip install mssql-cli
+pip install cli-helpers --upgrade --force
+mssql-cli -S localhost -U sa -P 123abcAbc
+```
+
 
 ### Ref
 ```
