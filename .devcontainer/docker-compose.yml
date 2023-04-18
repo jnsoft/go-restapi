@@ -1,7 +1,21 @@
 version: "3"
 
 services:
-  database:
+  app:
+      build:
+        context: ..
+        dockerfile: .devcontainer/Dockerfile
+
+      volumes:
+        - ../..:/workspaces:cached
+
+      # Overrides default command so things don't shut down after the process ends.
+      command: sleep infinity
+
+      # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
+      network_mode: service:db
+    
+  db:
     build: ./db
     container_name: production-db
     ports:
