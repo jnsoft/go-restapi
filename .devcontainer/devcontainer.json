@@ -9,7 +9,9 @@
     		"ghcr.io/devcontainers/features/go:latest": {}
 		//,"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
 	},
+	// VS Code extensions
 	//"extensions": [
+	//      "ms-dotnettools.csharp"
     	//	"dbaeumer.vscode-eslint",
     	//	"mtxr.sqltools",
     	//	"mtxr.sqltools-driver-pg",
