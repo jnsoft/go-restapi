@@ -6,7 +6,7 @@
 	"service": "app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
-    "ghcr.io/devcontainers/features/go:latest": {}
+    		"ghcr.io/devcontainers/features/go:latest": {}
 		//,"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
 	},
 
