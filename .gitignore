@@ -15,6 +15,7 @@
 # vendor/
 
 bin/
+.devcontainer/db/postgres
 
 *.csr
 *.crt
