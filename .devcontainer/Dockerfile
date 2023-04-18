@@ -1,0 +1,29 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/postgres
+{
+	"name": "Go web services",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// This can be used to network with other containers or the host.
+	// "forwardPorts": [3000, 9001]
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "./.devcontainer/postCreateCommand.sh"
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
+
+//"image": "mcr.microsoft.com/devcontainers/universal:2",
+//  "features": {
+//    "ghcr.io/devcontainers/features/go:latest": {}
+//  }
