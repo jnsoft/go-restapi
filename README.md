@@ -88,6 +88,7 @@ curl https://localhost:9001/items
 sudo apt-get update
 sudo apt-get install -y postgresql-client
 
+psql -h localhost -p 5432 -d albums -U postgres -W 
 postgres>\l (list databases)
 postgres>\c db_name (change databse)
 postgres>\dt (list tables)
